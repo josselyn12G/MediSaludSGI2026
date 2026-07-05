@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(docker exec grm_frontend npm run build 2>&1 | Select-String -Pattern \"built in|error|Could not resolve\" | Select-Object -Last 3; \"EXIT=$LASTEXITCODE\")"
+    ]
+  }
+}
