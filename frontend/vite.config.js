@@ -9,7 +9,8 @@ export default defineConfig({
     watch: { usePolling: true },
     allowedHosts: true,
     proxy: {
-      "/api": "http://localhost:8000",
+      // En Docker el backend no es localhost: se apunta con VITE_PROXY_TARGET=http://backend:8000
+      "/api": process.env.VITE_PROXY_TARGET || "http://localhost:8000",
     },
   },
 });
