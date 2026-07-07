@@ -77,7 +77,6 @@ Abre **http://localhost:5173**.
 admin@medisalud.com  /  medisalud2026
 ```
 También puedes registrar una cuenta nueva desde `/registro`.
-(El login ya no las precarga: escríbelas manualmente.)
 
 ### Verificar que compila
 
@@ -99,15 +98,6 @@ ngrok http 5173
 
 La URL pública `https://xxxx.ngrok-free.app` sirve todo (interfaz + API) por un solo
 túnel, gracias al proxy `/api` del servidor Vite.
-
-## GitHub Pages (solo frontend)
-
-Cada push a `main` publica el frontend en
-**https://josselyn12g.github.io/MediSaludSGI2026/** mediante el workflow
-[`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml)
-(requiere Settings → Pages → Source: *GitHub Actions*). Pages no ejecuta Django:
-para que el login funcione allí, define la variable de repositorio `VITE_API_URL`
-apuntando a un backend público (p. ej. `https://xxxx.ngrok-free.app/api`).
 
 ---
 
@@ -143,7 +133,6 @@ apuntando a un backend público (p. ej. `https://xxxx.ngrok-free.app/api`).
 ```
 MediSaludSGI2026/
 ├── docker-compose.yml
-├── .github/workflows/deploy-pages.yml   (publicación del frontend en GitHub Pages)
 ├── docs/                                (manuales, respaldo técnico y presentación)
 ├── backend/   (Django · apps: accounts, organizacion, contexto, activos, amenazas,
 │               riesgos, tratamiento, monitoreo, ia_asistente · motor Monte Carlo)
