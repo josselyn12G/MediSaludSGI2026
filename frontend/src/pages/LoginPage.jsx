@@ -6,8 +6,8 @@ import Icon from "../components/Icon";
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("admin@medisalud.com");
-  const [password, setPassword] = useState("medisalud2026");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -110,10 +110,6 @@ export default function LoginPage() {
                 Regístrate
               </Link>
             </p>
-
-            <div className="mt-5 rounded-xl border border-brand-100 bg-brand-50 p-3 text-center text-xs text-brand-700">
-              Demo: <b>admin@medisalud.com</b> / <b>medisalud2026</b>
-            </div>
           </div>
         </div>
       </div>

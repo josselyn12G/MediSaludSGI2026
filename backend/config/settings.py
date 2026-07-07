@@ -2,6 +2,11 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+# Algunos antivirus (Avast/AVG) inyectan SSLKEYLOGFILE apuntando a un dispositivo
+# sin permisos de escritura; ssl.create_default_context() falla con PermissionError
+# al llamar APIs externas (p. ej. OpenAI). Se elimina del entorno del proceso.
+os.environ.pop("SSLKEYLOGFILE", None)
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key-change-me")
@@ -119,6 +124,6 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = os.environ.get(
     "CORS_ALLOWED_ORIGINS",
-    "http://localhost:5173,http://127.0.0.1:5173",
+    "http://localhost:5173,http://127.0.0.1:5173,https://josselyn12g.github.io",
 ).split(",")
 CORS_ALLOW_CREDENTIALS = True

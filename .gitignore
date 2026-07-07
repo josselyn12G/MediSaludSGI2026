@@ -4,6 +4,8 @@ backend/db.sqlite3
 backend/**/migrations/0*.py
 node_modules/
 frontend/dist/
+backend/venv/
 .env
+.env.local
 *.log
 .DS_Store

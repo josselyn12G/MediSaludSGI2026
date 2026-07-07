@@ -9,6 +9,7 @@ openai_key } y este proxy:
 Se usa urllib de la stdlib para no añadir dependencias nuevas.
 """
 import json
+import ssl
 import urllib.error
 import urllib.request
 
@@ -22,6 +23,12 @@ from .prompts import BUILDERS, SYSTEM_BASE
 OPENAI_URL = "https://api.openai.com/v1/chat/completions"
 DEFAULT_MODEL = "gpt-4o-mini"
 TIMEOUT_S = 90
+# Python 3.13 activa VERIFY_X509_STRICT por defecto; los antivirus que
+# inspeccionan HTTPS (Avast/AVG) re-firman con una CA propia que no pasa esa
+# validación estricta. Se relaja solo ese flag: la verificación del
+# certificado y del hostname sigue activa.
+_SSL_CTX = ssl.create_default_context()
+_SSL_CTX.verify_flags &= ~ssl.VERIFY_X509_STRICT
 # Límite de tokens de salida por tipo (respuestas concisas = menos consumo)
 MAX_TOKENS = {"tef_contexto": 320, "sugerencia_tratamiento": 650, "informe_ejecutivo": 900, "resumen_escenario": 240}
 
@@ -46,7 +53,7 @@ def _call_openai(api_key, model, system, user, max_tokens=400):
         },
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=TIMEOUT_S) as resp:
+    with urllib.request.urlopen(req, timeout=TIMEOUT_S, context=_SSL_CTX) as resp:
         data = json.loads(resp.read().decode("utf-8"))
     return data["choices"][0]["message"]["content"]
 
