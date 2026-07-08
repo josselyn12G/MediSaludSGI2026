@@ -32,7 +32,9 @@ export default function RegisterPage() {
       setError(
         data?.email?.[0] ||
           data?.password?.[0] ||
-          "No se pudo crear la cuenta. Revisa los datos."
+          (err?.response
+            ? "No se pudo crear la cuenta. Revisa los datos."
+            : "No se pudo conectar con el servidor. Verifica que el backend esté corriendo.")
       );
     } finally {
       setLoading(false);

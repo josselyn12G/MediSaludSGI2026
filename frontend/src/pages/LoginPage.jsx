@@ -18,8 +18,12 @@ export default function LoginPage() {
     try {
       await login(email, password);
       navigate("/dashboard");
-    } catch {
-      setError("Credenciales inválidas. Verifica tu email y contraseña.");
+    } catch (err) {
+      setError(
+        err?.response?.status === 401
+          ? "Credenciales inválidas. Verifica tu email y contraseña."
+          : "No se pudo conectar con el servidor. Verifica que el backend esté corriendo (docker compose up o manage.py runserver)."
+      );
     } finally {
       setLoading(false);
     }
