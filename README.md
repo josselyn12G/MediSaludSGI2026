@@ -23,6 +23,25 @@ para el sector salud privado ecuatoriano (LOPDP).
 
 ---
 
+## ℹ️ Nota sobre saltos de línea en Windows (ajuste aplicado)
+
+En versiones anteriores, al clonar el repositorio desde Windows el backend de Docker
+moría al arrancar con `exec /app/entrypoint.sh: no such file or directory`. La causa:
+Git en Windows (`core.autocrlf=true`) convertía `entrypoint.sh` a saltos de línea
+CRLF, y el contenedor Linux no podía ejecutar el script (buscaba el intérprete
+`/bin/sh\r`, inexistente). **Ya está corregido de forma permanente**:
+
+- `.gitattributes` fuerza `eol=lf` en todos los `*.sh`, sin importar la configuración
+  de Git de quien clone.
+- El `Dockerfile` del backend además elimina cualquier CRLF del entrypoint al
+  construir la imagen, como red de seguridad.
+
+> Si clonaste **antes** de este ajuste y el backend no arranca: ejecuta `git pull`,
+> `docker compose down -v` (descarta la base a medio inicializar) y vuelve a correr
+> `docker compose up --build`.
+
+---
+
 ## Opción A · Arranque con Docker (recomendado)
 
 ```bash
