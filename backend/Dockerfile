@@ -14,7 +14,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN chmod +x /app/entrypoint.sh || true
+# Elimina retornos de carro (CRLF) que Git en Windows puede introducir al
+# clonar: con CRLF el kernel busca "/bin/sh\r" y el contenedor muere con
+# "exec /app/entrypoint.sh: no such file or directory".
+RUN sed -i 's/\r$//' /app/entrypoint.sh && chmod +x /app/entrypoint.sh
 
 EXPOSE 8000
 

@@ -1,0 +1,8 @@
+# Los scripts de shell se ejecutan en contenedores Linux: siempre LF,
+# sin importar el core.autocrlf de quien clone (fix: exec entrypoint.sh
+# "no such file or directory" en Windows).
+*.sh text eol=lf
+
+# Binarios de Office: nunca normalizar
+*.docx binary
+*.pptx binary
